@@ -19,30 +19,16 @@ table {
 	width: 50px;
 	height: 50px;
 	margin:0;
-	background-color: rgb(249,192,40);
 	border: 0;
 	color: white;
 	padding: 0;
 }
 
-.keyboard {
-
-	height: 50px;
-	width: 50px;
-	background-color: white;
-	float: right;
-	z-index: 3;
-}
-
-.bottom {
-
-	display: inline-block;
-
-}
 
 h1, h2 {
 
 	color: white;
+
 
 }
 
@@ -63,10 +49,72 @@ h1, h2 {
 #wholecontent {
 
 	position: relative;
+	text-align: center;
+
 }
 
+.gameover {
+
+	margin: 0;
+	font-size: 130px;
+	margin-top: 200px;
+	font-weight: 400;
+}
+
+.score {
+
+	font-size: 40px;
+	margin-top: 20px;
+}
+
+button {
+
+	font-size: 30px;
+	padding: 15px;
+	padding-top: 12px;
+	margin-top: 20px;
+	border: 5px solid white;
+	background-color: #635f62;
+	color: white;
+
+}
+
+button:hover {
+
+	border: 5px solid #635f62;
+	background-color: white;
+	color: #635f62;
+
+}
+
+.character {
+
+	height: 160px;
+	width: 160px;
+	background-image: url("images/hulk-front.jpg");
+	background-size: cover;
+	border: 10px solid white;
+	margin: auto;
+	position: relative;
 
 
+}
+
+.choose {
+
+	font-size: 70px;
+	margin-bottom: 50px;
+	margin-top: 80px;
+
+}
+
+.character:hover {
+
+	border: 10px solid red;
+
+
+
+}
 
 
 
