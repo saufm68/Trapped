@@ -282,7 +282,7 @@ function createRandomEnemy() {
         addSound("Roundhouse Kick-SoundBible.com-1663225804.mp3");
         newEnemySpawn += 1;
 
-        enemyBehaviour(enemyNew);
+        setTimeout( function() {enemyBehaviour(enemyNew)}, 500);
 
     }, 6000);
 
@@ -446,7 +446,7 @@ function createBoundaries() {
 
     for (var i = 1; i < totalColumns - 1; i++) {
 
-        if (i%2 === 0) {
+        if (i%3 === 0) {
 
             jsGrid[1][i] = "*";
             jsGrid[totalRows-2][i] = "*";
@@ -463,7 +463,7 @@ function createBoundaries() {
 
     for (var i = 1; i < totalRows - 1; i++) {
 
-        if (i%2 === 0) {
+        if (i%3 === 0) {
 
             jsGrid[i][1] = "*";
             jsGrid[i][totalColumns-2] = "*";
@@ -883,12 +883,6 @@ function addSound(src) {
 
 };
 
-// function debug() {
-
-//     var checkGrid = document.getElementsByTagName("img");
-
-//     for
-// }
 
 
 window.onload = function() {

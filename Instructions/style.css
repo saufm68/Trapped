@@ -45,6 +45,7 @@ p {
 
 	font-size: 25px;
 	max-width: 75vw;
+	min-width: 617px;
 	margin: 0 auto;
 	text-align: justify;
 
