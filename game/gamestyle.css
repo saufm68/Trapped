@@ -59,7 +59,7 @@ h1, h2 {
 
 }
 
-.gameover {
+.gameover, .winner {
 
 	margin: 0;
 	font-size: 130px;
@@ -67,10 +67,15 @@ h1, h2 {
 	font-weight: 400;
 }
 
-.score {
+.winner {
+
+	margin-top: 150px;
+}
+
+.score, .highscore {
 
 	font-size: 40px;
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 button {

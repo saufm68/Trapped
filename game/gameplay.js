@@ -141,8 +141,6 @@ function pickTheme() {
 
         listOfOptions[i].addEventListener("click", function(){
 
-            console.log(this.id);
-
             if (this.id === "hulk") {
 
                 selectedCharacter = character.hulk;
@@ -217,6 +215,7 @@ function createBoard() {
     var backgroundColor = document.querySelector("#gameboard");
     backgroundColor.style.backgroundColor = selectedBackground;
     createBoundaries();
+    createExit();
     createPlayer();
     createEnemy(enemy1);
     createEnemy(enemy2);
@@ -230,6 +229,7 @@ function createBoard() {
     createRandomEnemy();
     timer = setInterval( countup , 1000 );
     executeCheck = setInterval(gameOver, 1);
+    executeCheckForWin = setInterval(win, 1);
 
 };
 
@@ -245,6 +245,16 @@ function createPlayer() {
     mapGrid.src = selectedCharacter.frontView;
 
 };
+
+function createExit() {
+
+    var exit = [0,0];
+    jsGrid[exit[0]][exit[1]] = "E";
+    var exitDom = document.querySelector("#r0 #c0 img");
+    exitDom.src = "images/exit.jpg";
+
+
+}
 
 function createEnemy(enemyId) {
 
@@ -284,7 +294,7 @@ function createRandomEnemy() {
 
         setTimeout( function() {enemyBehaviour(enemyNew)}, 500);
 
-    }, 6000);
+    }, 3000);
 
 }
 
@@ -293,7 +303,6 @@ function plottingPlayer(view) {
 
     var mapGridValue = "#r" + currentCoordinateY + " #c" + currentCoordinateX + " img";
     var mapGrid = document.querySelector(mapGridValue);
-    console.log(mapGrid.src);
 
     if (view === undefined ) {
 
@@ -506,7 +515,6 @@ function createBoundaries() {
         var onGrid = document.querySelector(onGridValue);
         onGrid.src = selectedObstacle.image;
     }
-
 };
 
 function enemyBehaviour(enemyId) {
@@ -515,7 +523,7 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[0] > 0) {
 
-            if (jsGrid[enemyId[0] - 1][enemyId[1]] !== "*") {
+            if (jsGrid[enemyId[0] - 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] - 1][enemyId[1]] !== "E") {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
@@ -542,7 +550,7 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[0] < jsGrid.length - 1) {
 
-            if (jsGrid[enemyId[0] + 1][enemyId[1]] !== "*" ) {
+            if (jsGrid[enemyId[0] + 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] + 1][enemyId[1]] !== "E") {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
@@ -569,7 +577,7 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[1] > 0) {
 
-            if (jsGrid[enemyId[0]][enemyId[1] - 1] !== "*") {
+            if (jsGrid[enemyId[0]][enemyId[1] - 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] - 1] !== "E") {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
@@ -597,7 +605,7 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[1] < jsGrid[0].length - 1) {
 
-            if (jsGrid[enemyId[0]][enemyId[1] + 1] !== "*") {
+            if (jsGrid[enemyId[0]][enemyId[1] + 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] + 1] !== "E") {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
@@ -627,24 +635,22 @@ function enemyBehaviour(enemyId) {
             var valueDifferenceX = differenceX * -1;
             var valueDifferenceY = differenceY * -1;
 
+            var options = [moveUp, moveDown, moveLeft, moveRight];
+
             if (valueDifferenceX < valueDifferenceY && differenceX < 0) {
 
                 moveRight(enemyId);
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceY < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveDown(enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveUp(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveLeft(enemyId);
-                        }
                     }
                 }
 
@@ -654,18 +660,14 @@ function enemyBehaviour(enemyId) {
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceY < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveDown(enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveUp(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveRight(enemyId);
-                        }
                     }
                 }
 
@@ -675,18 +677,14 @@ function enemyBehaviour(enemyId) {
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceX < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveRight(enemyId);
+                    while ( enemyId[2]  === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveUp(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveLeft(enemyId);
-                        }
                     }
                 }
 
@@ -696,18 +694,14 @@ function enemyBehaviour(enemyId) {
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceX < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveRight(enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveDown(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveLeft(enemyId);
-                        }
                     }
                 }
 
@@ -717,18 +711,14 @@ function enemyBehaviour(enemyId) {
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceY < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveDown(enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveUp(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveRight(enemyId);
-                        }
                     }
                 }
 
@@ -738,18 +728,14 @@ function enemyBehaviour(enemyId) {
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceY < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveDown(enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveUp(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveLeft(enemyId);
-                        }
                     }
 
                 }
@@ -760,18 +746,14 @@ function enemyBehaviour(enemyId) {
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceX < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveRight(enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveDown(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveLeft(enemyId);
-                        }
                     }
                 }
 
@@ -781,24 +763,33 @@ function enemyBehaviour(enemyId) {
 
                 if (enemyId[2] === "notOk") {
 
-                    if (differenceX < 0) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-                        moveRight(enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-                    } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-                        moveUp(enemyId);
-
-                        if ( enemyId[2] === "notOk") {
-
-                            moveLeft(enemyId);
-                        }
                     }
                 }
+
+            } else if (valueDifferenceX === valueDifferenceY) {
+
+                var pickRandomMovement = randomness(options.length);
+                options[pickRandomMovement](enemyId);
+
+                while (enemyId[2] === "notOk" ) {
+
+                    pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
+
+                }
+
             }
 
 
-        }, 280);
+        }, 295);
 
         enemyMovements.push(intervalForMoving);
 
@@ -821,10 +812,48 @@ var gameOver = function() {
     if (check === false) {
 
         gameover = true;
-        var whole = document.getElementById("wholecontent");
-        while (whole.firstChild) {
+        while (overallContainer.firstChild) {
 
-            whole.removeChild(whole.childNodes[0]);
+            overallContainer.removeChild(overallContainer.childNodes[0]);
+
+        }
+
+        var text = document.createElement("h1");
+        var text2 = document.createElement("h2");
+        var restart = document.createElement("button");
+        restart.innerHTML = "Restart";
+        text.innerHTML = "Game Over!!";
+        text.classList.add("gameover");
+        text2.classList.add("text2");
+        text2.innerHTML = "Nice try but you are not escaping from here...";
+        overallContainer.appendChild(text);
+        overallContainer.appendChild(text2);
+        overallContainer.appendChild(restart);
+        document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
+
+        for (var i = 0; i < enemyMovements.length; i++) {
+
+            clearInterval(enemyMovements[i]);
+
+        }
+
+        clearInterval(executeCheck);
+        clearInterval(executeCheckForWin);
+        clearInterval(timer);
+        clearInterval(enemyGenerator);
+
+    }
+
+};
+
+var win = function() {
+
+    if (jsGrid[0].includes("E") === false) {
+
+        gameover = true;
+        while (overallContainer.firstChild) {
+
+            overallContainer.removeChild(overallContainer.childNodes[0]);
 
         }
 
@@ -832,32 +861,53 @@ var gameOver = function() {
         var showScore = document.createElement("h2");
         var restart = document.createElement("button");
         restart.innerHTML = "Restart";
-        text.innerHTML = "Game Over!!";
-        text.classList.add("gameover");
+        text.innerHTML = "Congratulations!!";
+        text.classList.add("winner");
         showScore.classList.add("score");
         showScore.innerHTML = "Your score is: " + seconds;
-        whole.appendChild(text);
-        whole.appendChild(showScore);
-        whole.appendChild(restart);
-        document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
+        overallContainer.appendChild(text);
 
-        if (gameover === true) {
+        //check browser support
+        if ( typeof(Storage) !== undefined) {
 
-            for (var i = 0; i < (4 + newEnemySpawn); i++) {
+            if (localStorage.getItem("highScore") !== null ) {
 
-                clearInterval(enemyMovements[i]);
+                var currentHighScore = localStorage.getItem("highScore");
 
+                if (currentHighScore > seconds) {
+
+                    localStorage.setItem("highScore", seconds);
+                }
+
+            } else {
+
+               localStorage.setItem("highScore", seconds);
             }
 
-            clearInterval(executeCheck);
-            clearInterval(timer);
-            clearInterval(enemyGenerator);
+            var highScore = document.createElement("h2");
+            highScore.innerHTML = "Your highest score is : " + localStorage.getItem("highScore");
+            highScore.classList.add("highscore");
+            overallContainer.appendChild(highScore);
 
         }
 
-    }
+        overallContainer.appendChild(showScore);
+        overallContainer.appendChild(restart);
+        document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
 
-};
+        for (var i = 0; i < enemyMovements.length; i++) {
+
+            clearInterval(enemyMovements[i]);
+
+        }
+
+        clearInterval(executeCheck);
+        clearInterval(executeCheckForWin);
+        clearInterval(timer);
+        clearInterval(enemyGenerator);
+
+    }
+}
 
 var countup = function() {
 
