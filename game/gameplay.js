@@ -23,7 +23,7 @@ var selectedObstacle;
 var selectedBackground;
 var timer;
 var executeCheck;
-// var backgroundMusic;
+var backgroundMusic;
 
 
 var obstacle = {
@@ -31,6 +31,16 @@ var obstacle = {
     tree: {
 
         image: "images/cactus.jpg"
+    },
+
+    house: {
+
+        image: "images/house.jpg"
+    },
+
+    rock: {
+
+        image: "images/rock.jpg"
     }
 
 
@@ -45,6 +55,22 @@ var character = {
         rightView: "images/hulk-right.jpg",
         backView: "images/hulk-back.jpg"
 
+    },
+
+    prisoner: {
+
+        frontView: "images/prisoner-front.jpg",
+        leftView: "images/prisoner-left.jpg",
+        rightView: "images/prisoner-right.jpg",
+        backView: "images/prisoner-back.jpg"
+    },
+
+    batman: {
+
+        frontView: "images/batman-front.jpg",
+        leftView: "images/batman-left.jpg",
+        rightView: "images/batman-right.jpg",
+        backView: "images/batman-back.jpg"
     }
 
 
@@ -59,13 +85,32 @@ var enemy = {
         rightView: "images/redhulk-right.jpg",
         backView: "images/redhulk-back.jpg"
 
+    },
+
+    police: {
+
+        frontView: "images/police-front.jpg",
+        leftView: "images/police-left.jpg",
+        rightView: "images/police-right.jpg",
+        backView: "images/police-back.jpg"
+    },
+
+    joker: {
+
+        frontView: "images/joker-front.jpg",
+        leftView: "images/joker-left.jpg",
+        rightView: "images/joker-right.jpg",
+        backView: "images/joker-back.jpg"
     }
 
 }
 
 var background = {
 
-    hulk: "rgb(249,192,40)"
+    hulk: "rgb(249,192,40)",
+    prisoner: "rgb(146,146,146)",
+    batman: "rgb(166,165,129)"
+
 }
 
 function pickTheme() {
@@ -74,10 +119,21 @@ function pickTheme() {
     chooseCharacter.classList.add("choose");
     chooseCharacter.innerHTML = "Choose your Avatar";
     overallContainer.appendChild(chooseCharacter);
+
     var hulkCharacter = document.createElement("div");
     hulkCharacter.classList.add("character");
     hulkCharacter.id = "hulk"
     overallContainer.appendChild(hulkCharacter);
+
+    var prisonerCharacter = document.createElement("div");
+    prisonerCharacter.classList.add("character");
+    prisonerCharacter.id = "prisoner"
+    overallContainer.appendChild(prisonerCharacter);
+
+    var batmanCharacter = document.createElement("div");
+    batmanCharacter.classList.add("character");
+    batmanCharacter.id = "batman"
+    overallContainer.appendChild(batmanCharacter);
 
     var listOfOptions = document.querySelectorAll(".character");
 
@@ -85,13 +141,28 @@ function pickTheme() {
 
         listOfOptions[i].addEventListener("click", function(){
 
-            if (this.id = "hulk") {
+            console.log(this.id);
+
+            if (this.id === "hulk") {
 
                 selectedCharacter = character.hulk;
                 selectedEnemy = enemy.redHulk;
                 selectedObstacle = obstacle.tree;
                 selectedBackground = background.hulk;
 
+            } else if (this.id === "prisoner") {
+
+                selectedCharacter = character.prisoner;
+                selectedEnemy = enemy.police;
+                selectedObstacle = obstacle.house;
+                selectedBackground = background.prisoner;
+
+            } else if (this.id === "batman") {
+
+                selectedCharacter = character.batman;
+                selectedEnemy = enemy.joker;
+                selectedObstacle = obstacle.rock;
+                selectedBackground = background.batman;
             }
 
 
@@ -222,8 +293,9 @@ function plottingPlayer(view) {
 
     var mapGridValue = "#r" + currentCoordinateY + " #c" + currentCoordinateX + " img";
     var mapGrid = document.querySelector(mapGridValue);
+    console.log(mapGrid.src);
 
-    if (view === undefined) {
+    if (view === undefined ) {
 
        mapGrid.src = "";
 
@@ -253,7 +325,13 @@ function plottingEnemy(enemyId, view) {
 //getting the value of the key pressed and moving the character to the specified direction
 function movePlayer() {
 
-    window.addEventListener("keydown", function(){
+    var move = function(event){
+
+        if (gameover === true) {
+
+            window.removeEventListener("keydown", move);
+
+        }
 
         var events = event.key;
 
@@ -267,16 +345,17 @@ function movePlayer() {
                     currentCoordinateY -= 1;
                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = " ";
 
+                } else {
+
+                    //to plot the co-ordinate of he player before moving
+                    plottingPlayer();
+                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "X";
+                    currentCoordinateY -= 1;
+                    //to plot the co-ordinate of the player after moving
+                    plottingPlayer(selectedCharacter.backView);
+                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = " ";
+
                 }
-
-                //to plot the co-ordinate of he player before moving
-                plottingPlayer();
-                jsGrid[currentCoordinateY - 1][currentCoordinateX] = "X";
-                currentCoordinateY -= 1;
-                //to plot the co-ordinate of the player after moving
-                plottingPlayer(selectedCharacter.backView);
-                jsGrid[currentCoordinateY + 1][currentCoordinateX] = " ";
-
 
 
             }
@@ -291,15 +370,15 @@ function movePlayer() {
                     currentCoordinateY += 1;
                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
 
+                } else {
+
+                    plottingPlayer();
+                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "X";
+                    currentCoordinateY += 1;
+                    plottingPlayer(selectedCharacter.frontView);
+                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
+
                 }
-
-                plottingPlayer();
-                jsGrid[currentCoordinateY + 1][currentCoordinateX] = "X";
-                currentCoordinateY += 1;
-                plottingPlayer(selectedCharacter.frontView);
-                jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
-
-
             }
 
         } else if (events === "ArrowLeft" && currentCoordinateX > 0) {
@@ -312,15 +391,15 @@ function movePlayer() {
                     currentCoordinateX -= 1;
                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
 
+                } else {
+
+                    plottingPlayer();
+                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "X";
+                    currentCoordinateX -= 1;
+                    plottingPlayer(selectedCharacter.leftView);
+                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
+
                 }
-
-                plottingPlayer();
-                jsGrid[currentCoordinateY][currentCoordinateX - 1] = "X";
-                currentCoordinateX -= 1;
-                plottingPlayer(selectedCharacter.leftView);
-                jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
-
-
             }
 
         } else if (events === "ArrowRight" && currentCoordinateX <(jsGrid[0].length - 1)) {
@@ -333,20 +412,23 @@ function movePlayer() {
                     currentCoordinateX += 1;
                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
 
+                } else {
+
+                    plottingPlayer();
+                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "X";
+                    currentCoordinateX += 1;
+                    plottingPlayer(selectedCharacter.rightView);
+                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
+
                 }
-
-                plottingPlayer();
-                jsGrid[currentCoordinateY][currentCoordinateX + 1] = "X";
-                currentCoordinateX += 1;
-                plottingPlayer(selectedCharacter.rightView);
-                jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
-
-
             }
 
         }
 
-    });
+    };
+
+    window.addEventListener("keydown", move);
+
 
 };
 
@@ -437,9 +519,9 @@ function enemyBehaviour(enemyId) {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
-                jsGrid[enemyId[0]][enemyId[1]] = " ";
+                jsGrid[enemyId[0] - 1][enemyId[1]] = "Y";
                 enemyId[0] -= 1;
-                jsGrid[enemyId[0]][enemyId[1]] = "Y";
+                jsGrid[enemyId[0] + 1][enemyId[1]] = " ";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.backView);
                 enemyId[2] = "ok";
@@ -464,9 +546,9 @@ function enemyBehaviour(enemyId) {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
-                jsGrid[enemyId[0]][enemyId[1]] = " ";
+                jsGrid[enemyId[0] + 1][enemyId[1]] = "Y";
                 enemyId[0] += 1;
-                jsGrid[enemyId[0]][enemyId[1]] = "Y";
+                jsGrid[enemyId[0] - 1][enemyId[1]] = " ";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.frontView);
                 enemyId[2] = "ok";
@@ -491,9 +573,9 @@ function enemyBehaviour(enemyId) {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
-                jsGrid[enemyId[0]][enemyId[1]] = " ";
+                jsGrid[enemyId[0]][enemyId[1] - 1] = "Y";
                 enemyId[1] -= 1;
-                jsGrid[enemyId[0]][enemyId[1]] = "Y";
+                jsGrid[enemyId[0]][enemyId[1] + 1] = " ";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.leftView);
                 enemyId[2] = "ok";
@@ -519,9 +601,9 @@ function enemyBehaviour(enemyId) {
 
                 //to plot the co-ordinate of he player before moving
                 plottingEnemy(enemyId);
-                jsGrid[enemyId[0]][enemyId[1]] = " ";
+                jsGrid[enemyId[0]][enemyId[1] + 1] = "Y";
                 enemyId[1] += 1;
-                jsGrid[enemyId[0]][enemyId[1]] = "Y";
+                jsGrid[enemyId[0]][enemyId[1] - 1] = " ";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.rightView);
                 enemyId[2] = "ok";
@@ -540,20 +622,6 @@ function enemyBehaviour(enemyId) {
 
         var intervalForMoving = setInterval(function(){
 
-            //var checkOk = "ok";
-
-            // var options = [moveUp, moveDown, moveLeft, moveRight];
-
-            // var pickRandomMovement = randomness(options.length);
-            // options[pickRandomMovement](enemyId);
-
-            // while (checkOk === "notOk" ) {
-
-            //     pickRandomMovement = randomness(options.length);
-            //     options[pickRandomMovement](enemyId);
-
-            // }
-
             var differenceX = enemyId[1] - currentCoordinateX;
             var differenceY = enemyId[0] - currentCoordinateY;
             var valueDifferenceX = differenceX * -1;
@@ -569,14 +637,13 @@ function enemyBehaviour(enemyId) {
 
                         moveDown(enemyId);
 
+                    } else {
+
+                        moveUp(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveUp(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveLeft(enemyId);
-                            }
+                            moveLeft(enemyId);
                         }
                     }
                 }
@@ -591,14 +658,13 @@ function enemyBehaviour(enemyId) {
 
                         moveDown(enemyId);
 
+                    } else {
+
+                        moveUp(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveUp(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveRight(enemyId);
-                            }
+                            moveRight(enemyId);
                         }
                     }
                 }
@@ -613,14 +679,13 @@ function enemyBehaviour(enemyId) {
 
                         moveRight(enemyId);
 
+                    } else {
+
+                        moveUp(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveUp(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveLeft(enemyId);
-                            }
+                            moveLeft(enemyId);
                         }
                     }
                 }
@@ -635,14 +700,13 @@ function enemyBehaviour(enemyId) {
 
                         moveRight(enemyId);
 
+                    } else {
+
+                        moveDown(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveDown(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveLeft(enemyId);
-                            }
+                            moveLeft(enemyId);
                         }
                     }
                 }
@@ -657,14 +721,13 @@ function enemyBehaviour(enemyId) {
 
                         moveDown(enemyId);
 
+                    } else {
+
+                        moveUp(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveUp(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveRight(enemyId);
-                            }
+                            moveRight(enemyId);
                         }
                     }
                 }
@@ -679,16 +742,16 @@ function enemyBehaviour(enemyId) {
 
                         moveDown(enemyId);
 
+                    } else {
+
+                        moveUp(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveUp(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveLeft(enemyId);
-                            }
+                            moveLeft(enemyId);
                         }
                     }
+
                 }
 
             } else if (valueDifferenceX === 0 && differenceY > 0) {
@@ -701,14 +764,13 @@ function enemyBehaviour(enemyId) {
 
                         moveRight(enemyId);
 
+                    } else {
+
+                        moveDown(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveDown(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveLeft(enemyId);
-                            }
+                            moveLeft(enemyId);
                         }
                     }
                 }
@@ -723,21 +785,20 @@ function enemyBehaviour(enemyId) {
 
                         moveRight(enemyId);
 
+                    } else {
+
+                        moveUp(enemyId);
+
                         if ( enemyId[2] === "notOk") {
 
-                            moveUp(enemyId);
-
-                            if ( enemyId[2] === "notOk") {
-
-                                moveLeft(enemyId);
-                            }
+                            moveLeft(enemyId);
                         }
                     }
                 }
             }
 
 
-        }, 250);
+        }, 280);
 
         enemyMovements.push(intervalForMoving);
 
@@ -822,6 +883,13 @@ function addSound(src) {
 
 };
 
+// function debug() {
+
+//     var checkGrid = document.getElementsByTagName("img");
+
+//     for
+// }
+
 
 window.onload = function() {
 
@@ -829,9 +897,6 @@ window.onload = function() {
 
 };
 
-
-// create more charcters/enemy/obstacle
-// make enemy move a targeted direction
 
 
 

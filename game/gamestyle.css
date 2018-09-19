@@ -17,14 +17,20 @@ table {
 
 .columns {
 	width: 50px;
-	height: 50px;
+	height: 55px;
 	margin:0;
 	border: 0;
 	color: white;
 	padding: 0;
 }
 
+.rows {
 
+		height: 55px;
+		padding: 0;
+		margin: 0;
+
+}
 h1, h2 {
 
 	color: white;
@@ -91,20 +97,38 @@ button:hover {
 
 	height: 160px;
 	width: 160px;
-	background-image: url("images/hulk-front.jpg");
-	background-size: cover;
 	border: 10px solid white;
 	margin: auto;
 	position: relative;
+	display: inline-block;
+	margin-left: 30px;
 
 
 }
 
+#hulk {
+
+	background-image: url("images/hulk-front.jpg");
+	background-size: cover;
+}
+
+#prisoner {
+
+	background-image: url("images/prisoner-front.jpg");
+	background-size: cover;
+}
+
+#batman {
+
+	background-image: url("images/batman-front.jpg");
+	background-size: cover;
+}
+
 .choose {
 
-	font-size: 70px;
-	margin-bottom: 50px;
-	margin-top: 80px;
+	font-size: 90px;
+	margin-bottom: 80px;
+	margin-top: 100px;
 
 }
 
