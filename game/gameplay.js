@@ -11,10 +11,10 @@ var jsGrid = [];
 var currentCoordinateX;
 var currentCoordinateY;
 var gameover;
-var enemy1 = [1, (totalColumns - 1)];
-var enemy2 = [0, 2];
-var enemy3 = [(totalRows - 1), 1];
-var enemy4 = [2, 0];
+var enemy1 = [1, (totalColumns - 1), "ok"];
+var enemy2 = [0, 2, "ok"];
+var enemy3 = [(totalRows - 1), 1, "ok"];
+var enemy4 = [2, 0, "ok"];
 var enemyGenerator;
 var newEnemySpawn = 0;
 var selectedCharacter;
@@ -203,6 +203,7 @@ function createRandomEnemy() {
 
         enemyNew.push(randomOuterGrid);
         enemyNew.push(randomInnerGrid);
+        enemyNew.push("ok");
         jsGrid[randomOuterGrid][randomInnerGrid] = "Y";
         var randomPlotEnemy = "#r" + randomOuterGrid + " #c" + randomInnerGrid + " img";
         var randomEnemyGrid = document.querySelector(randomPlotEnemy);
@@ -212,7 +213,7 @@ function createRandomEnemy() {
 
         enemyBehaviour(enemyNew);
 
-    }, 5000);
+    }, 7000);
 
 }
 
@@ -441,16 +442,16 @@ function enemyBehaviour(enemyId) {
                 jsGrid[enemyId[0]][enemyId[1]] = "Y";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.backView);
-                checkOk = "ok";
+                enemyId[2] = "ok";
 
             } else {
 
-                checkOk = "notOk";
+                enemyId[2] = "notOk";
             }
 
         } else {
 
-            checkOk = "notOk";
+            enemyId[2] = "notOk";
         }
 
     };
@@ -468,16 +469,16 @@ function enemyBehaviour(enemyId) {
                 jsGrid[enemyId[0]][enemyId[1]] = "Y";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.frontView);
-                checkOk = "ok";
+                enemyId[2] = "ok";
 
             } else {
 
-                checkOk = "notOk";
+                enemyId[2] = "notOk";
             }
 
         } else {
 
-            checkOk = "notOk";
+            enemyId[2] = "notOk";
         }
 
     };
@@ -495,16 +496,16 @@ function enemyBehaviour(enemyId) {
                 jsGrid[enemyId[0]][enemyId[1]] = "Y";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.leftView);
-                checkOk = "ok";
+                enemyId[2] = "ok";
 
             } else {
 
-                checkOk = 'notOk';
+                enemyId[2] = 'notOk';
             }
 
         } else {
 
-            checkOk = "notOk";
+            enemyId[2] = "notOk";
         }
 
 
@@ -523,23 +524,23 @@ function enemyBehaviour(enemyId) {
                 jsGrid[enemyId[0]][enemyId[1]] = "Y";
                 //to plot the co-ordinate of the player after moving
                 plottingEnemy(enemyId, selectedEnemy.rightView);
-                checkOk = "ok";
+                enemyId[2] = "ok";
 
             } else {
 
-                checkOk = "notOk";
+                enemyId[2] = "notOk";
             }
 
         } else {
 
-            checkOk = "notOk";
+            enemyId[2] = "notOk";
         }
 
     };
 
         var intervalForMoving = setInterval(function(){
 
-            var checkOk = "ok";
+            //var checkOk = "ok";
 
             // var options = [moveUp, moveDown, moveLeft, moveRight];
 
@@ -562,17 +563,17 @@ function enemyBehaviour(enemyId) {
 
                 moveRight(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceY < 0) {
 
                         moveDown(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveUp(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveLeft(enemyId);
                             }
@@ -584,17 +585,17 @@ function enemyBehaviour(enemyId) {
 
                 moveLeft(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceY < 0) {
 
                         moveDown(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveUp(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveRight(enemyId);
                             }
@@ -606,17 +607,17 @@ function enemyBehaviour(enemyId) {
 
                 moveDown(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceX < 0) {
 
                         moveRight(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveUp(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveLeft(enemyId);
                             }
@@ -628,17 +629,17 @@ function enemyBehaviour(enemyId) {
 
                 moveUp(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceX < 0) {
 
                         moveRight(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveDown(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveLeft(enemyId);
                             }
@@ -650,17 +651,17 @@ function enemyBehaviour(enemyId) {
 
                 moveLeft(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceY < 0) {
 
                         moveDown(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveUp(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveRight(enemyId);
                             }
@@ -672,17 +673,17 @@ function enemyBehaviour(enemyId) {
 
                 moveRight(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceY < 0) {
 
                         moveDown(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveUp(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveLeft(enemyId);
                             }
@@ -694,17 +695,17 @@ function enemyBehaviour(enemyId) {
 
                 moveUp(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceX < 0) {
 
                         moveRight(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveDown(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveLeft(enemyId);
                             }
@@ -716,17 +717,17 @@ function enemyBehaviour(enemyId) {
 
                 moveDown(enemyId);
 
-                if (checkOk === "notOk") {
+                if (enemyId[2] === "notOk") {
 
                     if (differenceX < 0) {
 
                         moveRight(enemyId);
 
-                        if ( checkOk === "notOk") {
+                        if ( enemyId[2] === "notOk") {
 
                             moveUp(enemyId);
 
-                            if ( checkOk === "notOk") {
+                            if ( enemyId[2] === "notOk") {
 
                                 moveLeft(enemyId);
                             }
@@ -736,7 +737,7 @@ function enemyBehaviour(enemyId) {
             }
 
 
-        }, 500);
+        }, 250);
 
         enemyMovements.push(intervalForMoving);
 
