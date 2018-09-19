@@ -213,7 +213,7 @@ function createRandomEnemy() {
 
         enemyBehaviour(enemyNew);
 
-    }, 7000);
+    }, 6000);
 
 }
 
