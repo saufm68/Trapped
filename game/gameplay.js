@@ -24,6 +24,7 @@ var selectedBackground;
 var timer;
 var executeCheck;
 var backgroundMusic;
+var initials;
 
 
 var obstacle = {
@@ -119,6 +120,17 @@ function pickTheme() {
     chooseCharacter.classList.add("choose");
     chooseCharacter.innerHTML = "Choose your Avatar";
     overallContainer.appendChild(chooseCharacter);
+
+    var playerInitials = document.createElement("input");
+    playerInitials.id = "initials";
+    playerInitials.setAttribute("type", "text");
+    playerInitials.setAttribute("maxlength", 3);
+    playerInitials.setAttribute("placeholder", "Enter Your Initials");
+    playerInitials.autofocus = true;
+    overallContainer.appendChild(playerInitials);
+    document.getElementById("initials").addEventListener("change", function(){initials = playerInitials.value});
+
+
 
     var hulkCharacter = document.createElement("div");
     hulkCharacter.classList.add("character");
@@ -874,18 +886,20 @@ var win = function() {
 
                 var currentHighScore = localStorage.getItem("highScore");
 
-                if (currentHighScore > seconds) {
+                if (currentHighScore >= seconds) {
 
                     localStorage.setItem("highScore", seconds);
+                    localStorage.setItem("leaderboardInitials", initials);
                 }
 
             } else {
 
                localStorage.setItem("highScore", seconds);
+               localStorage.setItem("leaderboardInitials", initials);
             }
 
             var highScore = document.createElement("h2");
-            highScore.innerHTML = "Your highest score is : " + localStorage.getItem("highScore");
+            highScore.innerHTML = "LEADERBOARD: " + localStorage.getItem("leaderboardInitials") + " " +localStorage.getItem("highScore");
             highScore.classList.add("highscore");
             overallContainer.appendChild(highScore);
 

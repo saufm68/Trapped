@@ -141,11 +141,19 @@ button:hover {
 
 	border: 10px solid red;
 
-
-
 }
 
+input {
 
+	display: block;
+	margin: auto;
+	margin-bottom: 40px;
+	font-size: 40px;
+	position: relative;
+	bottom: 30px;
+	left: 20px;
+	text-align: center;
+}
 
 
 
