@@ -356,7 +356,7 @@ function movePlayer() {
 
         var events = event.key;
 
-        if ( events === "ArrowUp" && currentCoordinateY > 0) {
+        if ( events === "w" && currentCoordinateY > 0) {
 
             if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "*") {
 
@@ -381,7 +381,7 @@ function movePlayer() {
 
             }
 
-        } else if (events === "ArrowDown" && currentCoordinateY < jsGrid.length - 1) {
+        } else if (events === "s" && currentCoordinateY < jsGrid.length - 1) {
 
             if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "*") {
 
@@ -402,7 +402,7 @@ function movePlayer() {
                 }
             }
 
-        } else if (events === "ArrowLeft" && currentCoordinateX > 0) {
+        } else if (events === "a" && currentCoordinateX > 0) {
 
             if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "*") {
 
@@ -423,7 +423,7 @@ function movePlayer() {
                 }
             }
 
-        } else if (events === "ArrowRight" && currentCoordinateX <(jsGrid[0].length - 1)) {
+        } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
 
             if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "*") {
 
