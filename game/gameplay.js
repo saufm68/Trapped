@@ -4,7 +4,7 @@ var screenHeight = window.innerHeight;
 //finding the total number of columns
 var totalColumns = Math.floor(screenWidth / 52);
 //finding the total number of rows
-var totalRows = Math.floor(screenHeight / 53);
+var totalRows = Math.floor(screenHeight / 54);
 var enemyMovements = [];
 var seconds = 1;
 var jsGrid = [];
@@ -295,80 +295,90 @@ function movePlayer() {
 
     var events = event.key;
 
-    if (events === "ArrowUp" && currentCoordinateY > 0) {
-      if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "*") {
-        if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "Y") {
-          gameOver();
-        } else if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
-          win();
-        } else {
-          //to plot the co-ordinate of he player before moving
-          plottingPlayer(
-            currentCoordinateY - 1,
-            currentCoordinateX,
-            selectedCharacter.backView
-          );
-          jsGrid[currentCoordinateY - 1][currentCoordinateX] = "X";
-          currentCoordinateY -= 1;
-          //to plot the co-ordinate of the player after moving
-          jsGrid[currentCoordinateY + 1][currentCoordinateX] = " ";
+    if (!events.repeat) {
+      if (events === "ArrowUp" && currentCoordinateY > 0) {
+        if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "*") {
+          if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "Y") {
+            gameOver();
+          } else if (
+            jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E"
+          ) {
+            win();
+          } else {
+            //to plot the co-ordinate of he player before moving
+            plottingPlayer(
+              currentCoordinateY - 1,
+              currentCoordinateX,
+              selectedCharacter.backView
+            );
+            jsGrid[currentCoordinateY - 1][currentCoordinateX] = "X";
+            currentCoordinateY -= 1;
+            //to plot the co-ordinate of the player after moving
+            jsGrid[currentCoordinateY + 1][currentCoordinateX] = " ";
+          }
         }
-      }
-    } else if (
-      events === "ArrowDown" &&
-      currentCoordinateY < jsGrid.length - 1
-    ) {
-      if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "*") {
-        if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "Y") {
-          gameOver();
-        } else if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "E") {
-          win();
-        } else {
-          plottingPlayer(
-            currentCoordinateY + 1,
-            currentCoordinateX,
-            selectedCharacter.frontView
-          );
-          jsGrid[currentCoordinateY + 1][currentCoordinateX] = "X";
-          currentCoordinateY += 1;
-          jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
+      } else if (
+        events === "ArrowDown" &&
+        currentCoordinateY < jsGrid.length - 1
+      ) {
+        if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "*") {
+          if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "Y") {
+            gameOver();
+          } else if (
+            jsGrid[currentCoordinateY + 1][currentCoordinateX] === "E"
+          ) {
+            win();
+          } else {
+            plottingPlayer(
+              currentCoordinateY + 1,
+              currentCoordinateX,
+              selectedCharacter.frontView
+            );
+            jsGrid[currentCoordinateY + 1][currentCoordinateX] = "X";
+            currentCoordinateY += 1;
+            jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
+          }
         }
-      }
-    } else if (events === "ArrowLeft" && currentCoordinateX > 0) {
-      if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "*") {
-        if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "Y") {
-          gameOver();
-        } else if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "E") {
-          win();
-        } else {
-          plottingPlayer(
-            currentCoordinateY,
-            currentCoordinateX - 1,
-            selectedCharacter.leftView
-          );
-          jsGrid[currentCoordinateY][currentCoordinateX - 1] = "X";
-          currentCoordinateX -= 1;
-          jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
+      } else if (events === "ArrowLeft" && currentCoordinateX > 0) {
+        if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "*") {
+          if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "Y") {
+            gameOver();
+          } else if (
+            jsGrid[currentCoordinateY][currentCoordinateX - 1] === "E"
+          ) {
+            win();
+          } else {
+            plottingPlayer(
+              currentCoordinateY,
+              currentCoordinateX - 1,
+              selectedCharacter.leftView
+            );
+            jsGrid[currentCoordinateY][currentCoordinateX - 1] = "X";
+            currentCoordinateX -= 1;
+            jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
+          }
         }
-      }
-    } else if (
-      events === "ArrowRight" &&
-      currentCoordinateX < jsGrid[0].length - 1
-    ) {
-      if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "*") {
-        if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "Y") {
-          gameOver();
-        } else if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "E") {
-          win();
-        } else {
-          plottingPlayer(
-            currentCoordinateY,
-            currentCoordinateX + 1,
-            selectedCharacter.rightView
-          );
-          jsGrid[currentCoordinateY][currentCoordinateX + 1] = "X";
-          currentCoordinateX += 1;
-          jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
+      } else if (
+        events === "ArrowRight" &&
+        currentCoordinateX < jsGrid[0].length - 1
+      ) {
+        if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "*") {
+          if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "Y") {
+            gameOver();
+          } else if (
+            jsGrid[currentCoordinateY][currentCoordinateX + 1] === "E"
+          ) {
+            win();
+          } else {
+            plottingPlayer(
+              currentCoordinateY,
+              currentCoordinateX + 1,
+              selectedCharacter.rightView
+            );
+            jsGrid[currentCoordinateY][currentCoordinateX + 1] = "X";
+            currentCoordinateX += 1;
+            jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
+          }
         }
       }
     }
