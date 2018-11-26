@@ -4,7 +4,7 @@ var screenHeight = window.innerHeight;
 //finding the total number of columns
 var totalColumns = Math.floor(screenWidth / 52);
 //finding the total number of rows
-var totalRows = Math.floor(screenHeight / 54);
+var totalRows = Math.floor(screenHeight / 60);
 var enemyMovements = [];
 var seconds = 1;
 var jsGrid = [];
@@ -295,7 +295,7 @@ function movePlayer() {
 
     var events = event.key;
 
-    if (!events.repeat) {
+    if (!event.repeat) {
       if (events === "ArrowUp" && currentCoordinateY > 0) {
         if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "*") {
           if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "Y") {
