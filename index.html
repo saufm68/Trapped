@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link href="https://fonts.googleapis.com/css?family=Ruslan+Display" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Ruslan+Display"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Trapped</title>
-</head>
-<body>
-    <header>
-        <h1>Trapped</h1>
-    </header>
-    <main>
-      <h2>Instructions</h2>
-      <p>You are trapped in a maze with your enemies and there is only one way out. You will be spawned at the <b>botom-right corner</b> of the screen and the exit is all the way at the <b>top-left corner</b> of the screen. You will have to use the arrow keys to navigate your avatar through the map towards the exit while avoiding the enemies. Enemies will spawn randomly after every 4 seconds so don't take to long to get to the exit. If the enemy catches you, it will be <b>Game Over</b> for you. Your score at the end of the game will be the amount of time you take to reach the exit. The lower the time, the better your score is.</p>
-      <a href="game/game.html"><button id="start">Play Game</button></a>
-    </main>
-    <footer>
-    </footer>
-</body>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row header">
+        <div class="col text-center">
+          <h1 class="mb-0 mt-2 title">Trapped</h1>
+        </div>
+      </div>
+      <main class="text-center mt-4">
+        <div class="row">
+          <div class="col px-0">
+            <h1 class="mt-2 mb-3 instruction">Instructions</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col px-0">
+            <p>
+              You are trapped in a maze with your enemies and there is only one
+              way out. You will be spawned at the <b>botom-right corner</b> of
+              the screen and the exit is all the way at the
+              <b>top-left corner</b> of the screen. You will have to use the
+              arrow keys to navigate your avatar through the map towards the
+              exit while avoiding the enemies. Enemies will spawn randomly after
+              every 4 seconds so don't take to long to get to the exit. If the
+              enemy catches you, it will be <b>Game Over</b> for you. Your score
+              at the end of the game will be the amount of time you take to
+              reach the exit. The lower the time, the better your score is.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col px-0 mb-4">
+            <a href="game/game.html"><button id="start">Play Game</button></a>
+          </div>
+        </div>
+      </main>
+      <div class="row footer"><div class="col "></div></div>
+    </div>
+  </body>
 </html>
