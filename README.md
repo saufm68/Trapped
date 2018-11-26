@@ -8,3 +8,5 @@ Skills used:
 3. Javascript
 
 Trapped is a game whereby the player navigates an avatar around the map to get to the exit on the opposite side of the map while avoiding enemies. 
+
+![Gameplay](https://media.giphy.com/media/1qeeSneeMzW7ijqlVS/giphy.gif)
