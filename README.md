@@ -12,4 +12,4 @@ Skills used for the project includes:
 
 ![Gameplay](https://media.giphy.com/media/1qeeSneeMzW7ijqlVS/giphy.gif)
 
-To try out this game, visit https://trap.netlify.com/
+Visit [this page](https://trap.netlify.com) to try out the game.
