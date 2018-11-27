@@ -11,8 +11,8 @@ Skills used for the project includes:
 
 ## Wireframes
 
-![Home Page Wireframe](./wireframe/Trapped-homepage.png =150x150)
-![Game Page Wireframe](./wireframe/Trapped-gameplay.png =150x150)
+<img src="./wireframe/Trapped-homepage.png" width="200" height="200" alt="Home Page Wireframe" />
+<img src="./wireframe/Trapped-gameplay.png" width="200" height="200" alt="Game Page Wireframe" />
 
 ## Gameplay
 
