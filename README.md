@@ -13,7 +13,6 @@ Skills used for the project includes:
 
 ![Home Page Wireframe](./wireframe/homepage.png)
 ![Game Page Wireframe](./wireframe/gameplay.png)
-![Home Page Wireframe](./wireframe/homepage.png)
 
 ## Gameplay
 
